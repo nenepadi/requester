@@ -1,0 +1,85 @@
+html,
+body {
+    font-size: 1rem;
+    color: black;
+    background-color: whitesmoke;
+    width: 100%;
+    min-height: 100vh;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-rows: 70px auto 50px;
+}
+
+header {
+    background-color: white;
+    padding: 0.5rem 1rem;
+    box-shadow: 2px 2px 5px #01830a;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav .site-brand {
+    height: 55px;
+    object-fit: contain;
+}
+
+header nav .main-nav {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+header nav .main-nav li {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+header nav .main-nav li > a {
+    color: black !important;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+header nav .main-nav li:hover,
+header nav .main-nav li > a:hover,
+header nav .main-nav li.active,
+header nav .main-nav li.active > a {
+    color: #8f9c79 !important;
+}
+
+main {
+    padding: 2rem 5rem;
+}
+
+#login-container {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#login-container form {
+    width: 400px;
+}
+
+footer {
+    background-color: #01830a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

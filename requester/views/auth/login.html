@@ -1,0 +1,23 @@
+{% extends "layout/main-layout.html" %}
+{% set active_page = 'login' %}
+
+{% block mainContent %}
+	<div id="login-container">
+        {% if error %}
+            <p style="color: red; text-align: center">
+                {{ error }}
+            </p>
+        {% endif %}
+        <form action="/login" method="post">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="username@domain.com" required autocomplete="off">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Password" required autocomplete="off">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+    </div>
+{% endblock mainContent %}

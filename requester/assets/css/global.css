@@ -1,0 +1,75 @@
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+    border: 1px solid #01830a;
+    padding: 0.5rem;
+    font-size: 0.95rem;
+    border-radius: 4px;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus {
+    outline-color: #01830a;
+}
+
+label {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+label:after {
+    content: ': ';
+}
+
+form {
+    padding: 1rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.form-group {
+    display: grid;
+    grid-template-columns: 1.5fr 3.5fr;
+    grid-gap: 10px;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+
+.btn {
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background-color: whitesmoke;
+    border: 1px solid #3a3a3a;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn:hover,
+.btn:active,
+.btn:focus {
+    background-color: #3a3a3a;
+    border-radius: 4px;
+    box-shadow: 1px 0 3px rgba(58, 58, 58, 0.75);
+    color: white;
+    font-weight: bolder;
+    outline: none;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #01830a;
+    border: 1px solid #007208;
+    color: white;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:focus {
+    background-color: rgba(1, 131, 9, 0.75);
+    box-shadow: 1px 0 3px rgba(0, 114, 8, 0.75);
+}

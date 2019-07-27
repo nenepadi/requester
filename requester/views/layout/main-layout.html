@@ -1,0 +1,61 @@
+{# this sets a navigation array. #}
+{% set navigation = [
+	('/', 'index', 'Home'),
+	('/complain', 'complain', 'Complain'),
+	('/projector', 'projector', 'Projector Request')
+] -%}
+
+{% set admin_nav = [
+	('/', 'index', 'Home'),
+	('/dashboard', 'dashboard', 'Dashboard'),
+	('/admin/add_user', 'add_user', 'Add Users')
+] -%}
+
+
+{% set active_page = active_page|default('index') -%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TIDD - Requester</title>
+
+	<link rel="stylesheet" href="/assets/css/global.css">
+	<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+	<header>
+		<nav>
+			<img src="/assets/images/logo.gif" alt="logo" class="site-brand">
+			<ul class="main-nav">
+				{% if user is defined and user.role == 'admin' %}
+					{% for href, id, caption in admin_nav %}
+						<li class="{% if id == active_page %} active {% endif %}"><a href="{{ href }}">{{ caption }}</a></li>
+					{% endfor %}
+				{% else %}
+					{# loop over navaigation #}
+					{% for href, id, caption in navigation %}
+						<li class="{% if id == active_page %} active {% endif %}"><a href="{{ href }}">{{ caption }}</a></li>
+					{% endfor %}
+				{% endif %}
+
+				{% if loggedin %}
+					<li><a href="/logout">Logout</a></li>
+				{% else %}
+					<li class="{% if 'login' == active_page %} active {% endif %}"><a href="/login">Login</a></li>
+				{% endif %}
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		{% block mainContent %}{% endblock mainContent %}
+	</main>
+
+	<footer>
+		&copy; <script>document.write(new Date().getFullYear())</script> - Timber Industry Development Division.
+	</footer>
+</body>
+</html>
