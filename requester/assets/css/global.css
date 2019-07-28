@@ -1,6 +1,7 @@
 input[type='text'],
 input[type='email'],
-input[type='password'] {
+input[type='password'],
+input[type='tel'] {
     border: 1px solid #01830a;
     padding: 0.5rem;
     font-size: 0.95rem;
@@ -9,7 +10,8 @@ input[type='password'] {
 
 input[type='text']:focus,
 input[type='email']:focus,
-input[type='password']:focus {
+input[type='password']:focus,
+input[type='tel']:focus {
     outline-color: #01830a;
 }
 
@@ -72,4 +74,33 @@ form {
 .btn-primary:focus {
     background-color: rgba(1, 131, 9, 0.75);
     box-shadow: 1px 0 3px rgba(0, 114, 8, 0.75);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 1rem;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.25);
+}
+
+table td,
+table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #01830a;
+    color: white;
 }

@@ -1,12 +1,27 @@
 import sqlite3
-from requester.utils import check_password, dict_factory
+from requester.utils import check_password, dict_factory, validate_input, hash_password
 from requester import settings
 
 
 class User:
     @staticmethod
-    def create(data):
-        pass
+    def create_user(fname, lname, email, phonenumber, password):
+        hashed_password = hash_password(password)
+        data = (fname, lname, email, phonenumber, hashed_password, "user")
+
+        try:
+            with sqlite3.connect(settings.DB_FILE) as con:
+                cur = con.cursor()
+                cur.execute(
+                    '''INSERT INTO users(fname, lname, email, phonenumber, password, role) VALUES(?, ?, ?, ?, ?, ?)''', data)
+                con.commit()
+                res = True
+        except sqlite3.Error as error:
+            print("SQL error occured: ", error.args[0])
+            res = False
+        finally:
+            con.close()
+            return res
 
     @staticmethod
     def authenticate(email, password):
@@ -29,12 +44,12 @@ class User:
                             'role': row['role']
                         }
                     else:
-                        return False
+                        user = False
                 else:
-                    return False
+                    user = False
         except sqlite3.Error as error:
             print("SQL error occured: ", error.args[0])
-            return False
+            user = False
         finally:
             con.close()
             return user
@@ -48,7 +63,23 @@ class User:
                 rows = cur.execute("SELECT * FROM users").fetchall()
         except sqlite3.Error as error:
             print("SQL error occured: ", error.args[0])
-            return False
+            rows = False
         finally:
             con.close()
             return rows
+
+    @staticmethod
+    def delete_user(id):
+        try:
+            with sqlite3.connect(settings.DB_FILE) as con:
+                cur = con.cursor()
+                cur.execute(
+                    '''DELETE FROM users WHERE userid = :id''', {'id': id})
+                con.commit()
+                res = True
+        except sqlite3.Error as error:
+            print("SQL error occured: ", error.args[0])
+            res = False
+        finally:
+            con.close()
+            return res

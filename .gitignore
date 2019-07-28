@@ -55,3 +55,4 @@ target/
 
 .vscode
 requester.db
+.DS_Store
