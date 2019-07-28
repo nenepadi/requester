@@ -7,17 +7,12 @@ CREATE TABLE "complains" (
 	"assignee"	INTEGER,
 	"is_solved"	INTEGER NOT NULL DEFAULT 0,
 	"deleted"	INTEGER NOT NULL DEFAULT 0
-)
+);
 
 CREATE TABLE "departments" (
 	"deptid" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	"name" TEXT NOT NULL
-)
-
-INSERT INTO "main"."departments" ("deptid", "name") VALUES ('1', 'Statistics');
-INSERT INTO "main"."departments" ("deptid", "name") VALUES ('2', 'Grading and Inspection');
-INSERT INTO "main"."departments" ("deptid", "name") VALUES ('3', 'Area Office');
-INSERT INTO "main"."departments" ("deptid", "name") VALUES ('4', 'Final Inspection');
+);
 
 CREATE TABLE "users" (
 	"userid"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -28,4 +23,19 @@ CREATE TABLE "users" (
 	"password"	TEXT NOT NULL,
 	"role"	TEXT NOT NULL DEFAULT 'user',
 	"department"	INTEGER
-)
+);
+
+CREATE TABLE "projector_request" (
+	"request_id"	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	"userid"	INTEGER NOT NULL,
+	"start_datetime"	NUMERIC NOT NULL,
+	"end_datetime"	NUMERIC NOT NULL,
+	"purpose"	TEXT NOT NULL,
+	"status"	INTEGER NOT NULL DEFAULT 0,
+	"deleted"	INTEGER NOT NULL DEFAULT 0
+);
+
+INSERT INTO "main"."departments" ("deptid", "name") VALUES ('1', 'Statistics');
+INSERT INTO "main"."departments" ("deptid", "name") VALUES ('2', 'Grading and Inspection');
+INSERT INTO "main"."departments" ("deptid", "name") VALUES ('3', 'Area Office');
+INSERT INTO "main"."departments" ("deptid", "name") VALUES ('4', 'Final Inspection');

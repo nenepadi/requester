@@ -2,5 +2,76 @@
 {% set active_page = 'projector' %}
 
 {% block mainContent %}
-	My Body
+	<div class="container">
+        {% if error %}
+            <p style="color: red; text-align: center">
+                {{ error }}
+                {% set error = "" -%}
+            </p>
+        {% endif %}
+
+        {% if success %}
+            <p style="color: green; text-align: center">
+                {{ success }}
+                {% set success = "" -%}
+            </p>
+        {% endif %}
+
+        <form action="/make_request" method="post">
+			<input type="hidden" name="userid" value="{{ user.userid }}">
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <div>
+					<input type="date" name="start_date" id="start_date">
+					<input type="time" name="start_time" id="start_time">
+				</div>
+            </div>
+
+			<div class="form-group">
+                <label for="end_date">End Date</label>
+				<div>
+					<input type="date" name="end_date" id="end_date">
+					<input type="time" name="end_time" id="end_time">
+				</div>
+			</div>
+
+            <div class="form-group">
+                <label for="purpose">Purpose</label>
+                <textarea name="purpose" id="purpose" rows="5"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+
+        <hr>
+
+        <table>
+			<tr>
+				<th>#</th>
+				<th>Start Datetime</th>
+				<th>End Datetime</th>
+				<th>Purpose</th>
+				<th>Approval</th>
+				<th>Actions</th>
+			</tr>
+			{% for item in requests %}
+				<tr>
+					<td>{{ loop.index }}</td>
+					<td>{{ item.start_readable }}</td>
+					<td>{{ item.end_readable }}</td>
+					<td>{{ item.purpose }}</td>
+					<td>
+						{% if item.status == 0 %}
+							Pending
+						{% else %}
+							Approved
+						{% endif %}
+					</td>
+					<td>
+						<a href="/delete_request/{{ item.request_id }}" style="color: red;">Delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+    </div>
 {% endblock mainContent %}
