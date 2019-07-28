@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from bottle import Bottle, jinja2_view, request, redirect
 from requester.models.User import User
+from requester.models.Complain import Complain
+import calendar
+import time
 
 home_app = Bottle()
 
@@ -59,7 +62,77 @@ def complain():
         redirect('/login')
     else:
         user = session.get('user')
-        return {'user': user, 'loggedin': loggedin}
+        complains = Complain.get_users_complains(user['userid'])
+
+        error = session.get('error', "")
+        session['error'] = ""
+
+        success = session.get('msg', "")
+        session['msg'] = ""
+
+        return {
+            'user': user,
+            'loggedin': loggedin,
+            'error': error,
+            'success': success,
+            'complains': complains
+        }
+
+
+@home_app.post('/make_complain')
+def make_complain():
+    # pylint: disable=E1101
+    session = request.environ.get('beaker.session')
+    loggedin = 'loggedin' in session
+    if loggedin == False:
+        redirect('/login')
+    else:
+        userid = request.forms.get('userid')
+        problem_type = request.forms.get('problem')
+        description = request.forms.get('description')
+        timestamp = calendar.timegm(time.gmtime())
+
+        res = Complain.make_complain(
+            userid, problem_type, description, timestamp)
+
+        if res:
+            session['msg'] = "Complain successfully submitted!"
+        else:
+            session['error'] = "Complain couldn't be submitted!"
+
+        redirect('/complain')
+
+
+@home_app.get('/delete_complain/<complain_id:int>')
+def delete_user(complain_id):
+    session = request.environ.get('beaker.session')
+    loggedin = 'loggedin' in session
+    if loggedin == False:
+        redirect('/login')
+    else:
+        res = Complain.delete_complain(complain_id)
+        if res:
+            session['msg'] = "Complain successfully deleted!"
+        else:
+            session['error'] = "Unable to delete complain!"
+
+        redirect('/complain')
+
+
+@home_app.get('/mark_solved/<complain_id:int>')
+def mark_as_solved(complain_id):
+    session = request.environ.get('beaker.session')
+    loggedin = 'loggedin' in session
+    if loggedin == False:
+        redirect('/login')
+    else:
+        res = Complain.mark_as_solved(complain_id)
+        if res:
+            session['msg'] = "Status changed successfully!"
+        else:
+            session['error'] = "Error occured!"
+
+        redirect('/complain')
 
 
 #### Projector Request ####

@@ -6,12 +6,14 @@
         {% if error %}
             <p style="color: red; text-align: center">
                 {{ error }}
+                {% set error = "" -%}
             </p>
         {% endif %}
 
         {% if success %}
             <p style="color: green; text-align: center">
                 {{ success }}
+                {% set success = "" -%}
             </p>
         {% endif %}
 
@@ -37,6 +39,16 @@
             </div>
 
             <div class="form-group">
+                <label for="dept">Department</label>
+                <select name="dept" id="dept">
+                    <option value="" selected disabled>-- Select a department --</option>
+                    {% for dept in departments %}
+                        <option value="{{ dept.deptid }}">{{ dept.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Password" required autocomplete="off">
             </div>
@@ -53,18 +65,22 @@
 
         <table>
             <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phonenumber</th>
                 <th>Role</th>
+                <th>Department</th>
                 <th>Action</th>
             </tr>
             {% for item in users if item.email != user.email  %}
                 <tr>
+                    <td>{{ loop.index }}</td>
                     <td>{{ item.fname }} {{ item.lname }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.phonenumber }}</td>
                     <td>{{ item.role }}</td>
+                    <td>{{ item.dept_name }}</td>
                     <td>
                         <a href="/admin/delete_user/{{ item.userid }}" style="color: red;">Delete</a>
                     </td>

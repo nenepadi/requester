@@ -16,12 +16,21 @@ def users():
     else:
         user = session.get('user')
         users = User.all_users()
+        departments = User.all_departments()
+
+        error = session.get('error', "")
+        session['error'] = ""
+
+        success = session.get('msg', "")
+        session['msg'] = ""
+
         return {
             'loggedin': loggedin,
             'users': users,
+            'departments': departments,
             'user': user,
-            'error': session.get('error', ""),
-            'success': session.get('msg', "")
+            'error': error,
+            'success': success
         }
 
 
@@ -39,6 +48,7 @@ def add_user():
         phonenumber = request.forms.get('phonenumber')
         password = request.forms.get('password')
         cpassword = request.forms.get('cpassword')
+        department = request.forms.get('dept')
 
         if password != cpassword:
             session['error'] = "Passwords do not match!"
@@ -52,7 +62,8 @@ def add_user():
             session['error'] = "Please enter a valid phone number!"
             redirect('/admin/add_user')
 
-        res = User.create_user(fname, lname, email, phonenumber, password)
+        res = User.create_user(fname, lname, email,
+                               phonenumber, password, department)
 
         if res:
             session['msg'] = "User successfully created!"
@@ -69,7 +80,7 @@ def delete_user(userid):
     if loggedin == False:
         redirect('/login')
     else:
-        res = User.delete_user(id)
+        res = User.delete_user(userid)
         if res:
             session['msg'] = "User successfully deleted!"
         else:
