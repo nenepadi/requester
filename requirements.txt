@@ -2,7 +2,7 @@ asn1crypto==0.24.0
 astroid==2.2.5
 autopep8==1.4.4
 Beaker==1.10.1
-bottle==0.12.17
+bottle==0.12.19
 cffi==1.12.3
 Click==7.0
 isort==4.3.21
